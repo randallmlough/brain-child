@@ -1,0 +1,6 @@
+.DS_STORE
+.env
+keys.*
+node_modules
+build
+/public
