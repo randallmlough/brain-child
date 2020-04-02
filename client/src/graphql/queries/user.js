@@ -6,6 +6,7 @@ export const CURRENT_USER = gql`
       _id
       email
     }
+  }
 `;
 
 export const IS_LOGGED_IN = gql`

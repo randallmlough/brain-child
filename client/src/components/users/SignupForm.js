@@ -14,11 +14,12 @@ export default () => {
       email,
       password,
     },
-    update(cache, { data: { signup } }) {
-      console.log(signup);
-      if (!signup) setErrorMessage('Invalid Credentials');
+    update(cache, { data: { signUp } }) {
+      debugger;
+      console.log(signUp);
+      if (!signUp) setErrorMessage('Invalid Credentials');
       else {
-        localStorage.setItem('token', signup.token);
+        localStorage.setItem('token', signUp.token);
       }
     },
     onError() {
