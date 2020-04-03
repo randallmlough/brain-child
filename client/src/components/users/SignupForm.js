@@ -67,7 +67,7 @@ export default () => {
           type="submit"
           disabled={loading}
         >
-          Signup
+          Sign up
         </button>
       </form>
     </>
