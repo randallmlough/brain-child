@@ -1,49 +1,25 @@
-const mongoose = require('mongoose');
 const { makeExecutableSchema } = require('graphql-tools');
-const User = mongoose.model('User');
-
-const typeDefs = `
-  type User {
-    _id: ID!
-    email: String!
-  }
+const types = require('./types');
+const { merge } = require('lodash');
+const otherTypeDefs = `
   type Query {
-    me: User
-  }
+    _empty: Boolean
+  } 
+
   type Mutation {
-    login(email: String!, password: String!): UserCredentials
-    signUp(email: String!, password: String!): UserCredentials
-  }
-  type UserCredentials {
-    _id: ID!
-    token: String
+    _empty: Boolean   
   }
 `;
 
-const resolvers = {
-  Query: {
-    me(_, __, context) {
-      return context.user;
-    },
-  },
-  Mutation: {
-    login(_, { email, password }) {
-      // login method used in MERN project
-      return User.login(email, password);
-    },
-    signUp(_, { email, password }) {
-      return User.signUp(email, password);
-    },
-  },
-  User: {},
-};
+const typeDefs = [...types.map((type) => type.typeDefs), otherTypeDefs];
+const resolvers = merge(...types.map((type) => type.resolvers));
 
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 module.exports = {
-  schema: makeExecutableSchema({
-    typeDefs,
-    resolvers,
-    logger: { log: (e) => console.log('\x1b[31m%s\x1b[0m', e.message) },
-  }),
+  schema,
   typeDefs,
   resolvers,
 };
