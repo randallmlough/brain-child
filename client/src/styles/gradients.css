@@ -1,0 +1,4 @@
+.bg-gradient-splash {
+  background: rgb(11,120,190);
+  background: linear-gradient(135deg, rgba(11,120,190,1) 0%, rgba(79,103,196,1) 83%);
+}
