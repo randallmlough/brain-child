@@ -5,6 +5,8 @@ const { mongo_uri: db } = require('../config');
 const bcrypt = require('bcryptjs');
 
 const User = mongoose.model('User');
+const Board = mongoose.model('Board');
+const Card = mongoose.model('Card');
 
 console.log('DB CONFIG', db);
 
@@ -25,20 +27,22 @@ const seedDatabase = async () => {
   });
   await user.save();
 
-  // todo: implement later
-  // const { Faker } = require('fakergem');
-  // const boards = [];
-  // for(let j=0; j < 30; j++) {
-  //   const board = new Board({ title: Faker.Book.title(), user: user._id });
-  //   boards.push(await board.save());
-  // }
+  const { Faker } = require('fakergem');
+  const boards = [];
+  for (let j = 0; j < 3; j++) {
+    const board = new Board({ name: Faker.Book.title(), user: user._id });
+    boards.push(await board.save());
+  }
 
-  // const cards = [];
-  // for(let i=0; i < 10; i++) {
-  //   const randomBoard = authors[Math.floor(Math.random() * authors.length)];
-  //   const card = new Card({ title: Faker.Book.title(), board: randomBoard._id });
-  //   cards.push(await card.save());
-  // }
+  const cards = [];
+  for (let i = 0; i < 10; i++) {
+    const randomBoard = boards[Math.floor(Math.random() * boards.length)];
+    const card = new Card({
+      title: Faker.Book.title(),
+      board: randomBoard._id,
+    });
+    cards.push(await card.save());
+  }
 
   mongoose.connection.close();
 };
