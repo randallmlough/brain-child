@@ -86,11 +86,6 @@ const createClient = async () => {
     localStorage.clear();
   });
 
-  // if (process.env.NODE_ENV === "development") {
-  //   window.client = client;
-  //   window.gql = gql;
-  // }
-
   return client;
 };
 
