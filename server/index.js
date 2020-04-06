@@ -1,4 +1,5 @@
 const { env, port, mongo_uri: db } = require('./config');
+console.log('DB', db);
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
