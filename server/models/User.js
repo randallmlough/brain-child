@@ -18,12 +18,12 @@ const UserSchema = new Schema({
     max: 32,
   },
   // todo: implement later
-  // boards: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "Board"
-  //   }
-  // ]
+  boards: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Board',
+    },
+  ],
 });
 
 UserSchema.statics.login = async function (email, password) {
