@@ -615,6 +615,28 @@ video {
   background: linear-gradient(135deg, rgba(11,120,190,1) 0%, rgba(79,103,196,1) 83%);
 }
 
+.nav-dd {
+  display: none;
+  background-color: white;
+  width: 328px;
+  padding: 1rem;
+  position: absolute;
+  left: -300px;
+  top: 40px;
+}
+
+.show {
+  display: block;
+}
+
+.transparent-white{
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.transparent-black{
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

@@ -27,7 +27,7 @@ const Board = (props) => {
     }
 
     const documentClick = function (e) {
-      if (!this.ref.current.contains(e.target)) {
+      if (!ref.current.contains(e.target)) {
         setCreateMode(false);
         document.removeEventListener('click', documentClick);
       }
