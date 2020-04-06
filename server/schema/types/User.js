@@ -4,6 +4,7 @@ const typeDefs = `
 type User {
     _id: ID!
     email: String!
+    boards: [Board]
 }
   type UserCredentials {
     _id: ID!
@@ -31,6 +32,12 @@ const resolvers = {
     },
     signUp(_, { email, password }) {
       return User.signUp(email, password);
+    },
+  },
+  User: {
+    boards: async (parentValue) => {
+      const user = await parentValue.populate('boards').execPopulate();
+      return user.boards;
     },
   },
 };
