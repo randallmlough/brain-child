@@ -19,7 +19,7 @@ CardSchema.statics.createCard = async function (title, board) {
   await card.save();
 
   const success = card._id !== '';
-  const message = success ? 'card was created' : `card was not created`;
+  const message = success ? 'card was created' : `card was no created`;
   return {
     success,
     message,

@@ -19,7 +19,7 @@ BoardSchema.statics.createBoard = async function (name, user) {
   await board.save();
 
   const success = board._id !== '';
-  const message = success ? 'board was created' : `board was not created`;
+  const message = success ? 'board was created' : `board was no created`;
   return {
     success,
     message,
