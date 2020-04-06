@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 const Modal = ({ showModal, setShowModal }) => {
-  const closeModal = () => setShowModal(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [description, setDescription] = useState('');
+  const closeModal = () => setShowModal(false);
   const openEdit = () => setShowEdit(true);
   const closeEdit = () => setShowEdit(false);
-  const [description, setDescription] = useState('');
 
   const content = (
     <>
