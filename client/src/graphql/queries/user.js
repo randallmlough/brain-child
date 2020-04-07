@@ -5,6 +5,10 @@ export const CURRENT_USER = gql`
     me {
       _id
       email
+      boards {
+        _id
+        name
+      }
     }
   }
 `;

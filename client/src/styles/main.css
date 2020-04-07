@@ -2,5 +2,5 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 /* purgecss end ignore */
-@import "gradients";
+@import "custom";
 @import "tailwindcss/utilities";
