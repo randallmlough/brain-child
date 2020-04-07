@@ -5,8 +5,6 @@ const Labels = () => {
   return(
     <>
       <label>High</label>
-      <label>High</label>
-      <label>High</label>
     </>
   )
 
