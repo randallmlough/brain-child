@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavDropdown from './NavDropdown';
 import Icon from '../ui/Icon';
@@ -8,20 +8,25 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const ref = useRef(null);
 
+  useEffect(() => {
+    if (ref && ref.current) {
+      const documentClick = function (e) {
+        if (!ref.current.contains(e.target)) {
+          setShowDropdown(false);
+        }
+      };
+      document.addEventListener('click', documentClick);
+      return () => {
+        document.removeEventListener('click', documentClick);
+      };
+    }
+  });
+
   const handleClick = (e) => {
     e.preventDefault();
     if (!showDropdown) {
       setShowDropdown(true);
     }
-
-    const documentClick = function (e) {
-      if (!ref.current.contains(e.target)) {
-        setShowDropdown(false);
-        document.removeEventListener('click', documentClick);
-      }
-    };
-
-    document.addEventListener('click', documentClick);
   };
 
   return (

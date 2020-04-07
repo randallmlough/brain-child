@@ -4,8 +4,8 @@ import BoardIndex from '../components/boards/BoardIndex';
 
 const Dashboard = () => {
   return (
-    <div>
-      <div>
+    <div className="w-full h-full min-h-screen bg-white">
+      <div className="w-full bg-primary-500 px-1 py-1">
         <Navbar />
       </div>
       <BoardIndex />

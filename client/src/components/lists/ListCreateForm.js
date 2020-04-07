@@ -1,18 +1,21 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { useState } from 'react';
+import { CREATE_LIST } from '../../graphql/mutations/list';
+import { GET_LISTS } from '../../graphql/queries/list';
 
-export default () => {
+const ListCreateForm = ({ boardId }) => {
   const [title, setTitle] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [createCard, { loading, error }] = useMutation(CREATE_LIST, {
+  const [createList, { loading, error }] = useMutation(CREATE_LIST, {
     variables: {
       title,
+      board: boardId,
     },
-    update(cache, { data: { list } }) {
-      if (!list) setErrorMessage('List was not created');
-      // perhaps rewrite cache?
+    update(cache, { data }) {
+      console.log(data);
+      // if (!list) setErrorMessage('List was not created');
     },
     onError() {
       setErrorMessage('Something went wrong');
@@ -26,7 +29,7 @@ export default () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          createCard();
+          createList();
         }}
       >
         <div className="mb-3">
@@ -37,7 +40,7 @@ export default () => {
             id="inputTitle"
             className=""
             type="text"
-            value={email}
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter list title..."
           />
@@ -52,4 +55,4 @@ export default () => {
   );
 };
 
-export default CreateCardForm;
+export default ListCreateForm;
