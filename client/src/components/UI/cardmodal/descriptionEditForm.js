@@ -1,8 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 
 const DescriptionEditForm = ( { closeEdit, cardDescription } ) => {
   const [description, setDescription] = useState('');
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if(ref && ref.current){
+      const docClick = function (e) {
+        if (!ref.current.contains(e.target)) {
+          closeEdit();
+        }
+      };
+      document.addEventListener('click', docClick);
+      return () => {
+        document.removeEventListener('click',docClick);
+      };
+    }
+  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,11 +27,11 @@ const DescriptionEditForm = ( { closeEdit, cardDescription } ) => {
 
   const formContent = (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={ref}>
         {
           cardDescription ? 
             <textarea 
-              placeholder={cardDescription} 
+              value={cardDescription} 
               onChange={(e) => setDescription(e.currentTarget.value)}
             />
           :

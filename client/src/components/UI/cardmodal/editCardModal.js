@@ -4,7 +4,7 @@ import Labels from './labels';
 
 const EditCardModal = ({ showModal, setShowModal, cardName, cardDescription }) => {
   const [showEdit, setShowEdit] = useState(false);
-  const [cardName, setCardName] = useState(cardName);
+  const [cardTitle, setCardTitle] = useState(cardName);
   const closeModal = () => setShowModal(false);
   const openEdit = () => setShowEdit(true);
   const closeEdit = () => setShowEdit(false);
@@ -14,8 +14,8 @@ const EditCardModal = ({ showModal, setShowModal, cardName, cardDescription }) =
       <div>
         <input 
           type="text" 
-          value={cardName}
-          onChange={(e) => setCardName(e.currentTarget.value)}
+          value={cardTitle}
+          onChange={(e) => setCardTitle(e.currentTarget.value)}
         />
         <button onClick={closeModal}>X</button>
         <Labels />
