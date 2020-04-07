@@ -4,7 +4,7 @@ const typeDefs = `
   type Card {
     _id: ID!
     title: String!
-    board: Board
+    list: List
   }
   type CardResponse {
     success: Boolean!
@@ -17,7 +17,7 @@ const typeDefs = `
   }
 
   extend type Mutation {
-    createCard(title: String!, board: ID!): CardResponse
+    createCard(title: String!, list: ID!): CardResponse
   }
   `;
 
@@ -31,14 +31,14 @@ const resolvers = {
     },
   },
   Mutation: {
-    createCard(_, { title, board }) {
-      return Card.createCard(title, board);
+    createCard(_, { title, list }) {
+      return Card.createCard(title, list);
     },
   },
   Card: {
-    board: async (parentValue) => {
-      const card = await parentValue.populate('board').execPopulate();
-      return card.board;
+    list: async (parentValue) => {
+      const card = await parentValue.populate('list').execPopulate();
+      return card.list;
     },
   },
 };

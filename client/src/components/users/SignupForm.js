@@ -15,7 +15,6 @@ export default () => {
       password,
     },
     update(cache, { data: { signUp } }) {
-      debugger;
       if (!signUp) setErrorMessage('Invalid Credentials');
       else {
         localStorage.setItem('token', signUp.token);

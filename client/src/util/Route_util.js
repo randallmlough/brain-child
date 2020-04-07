@@ -21,7 +21,7 @@ export const AuthRoute = ({ component: Component, path }) => {
   if (loading) return <h1> Loading...</h1>;
   if (error) return <h1> Error </h1>;
   if (data.isLoggedIn) {
-    return <Redirect to="/" />;
+    return <Redirect to="/dashboard" />;
   } else {
     return <Route path={path} component={Component} />;
   }

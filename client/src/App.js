@@ -5,6 +5,11 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Splash from './pages/Splash';
 import Modal from './pages/Modal';
+import Dashboard from './pages/Dashboard';
+import BoardDisplay from './pages/BoardDisplay';
+// import Loading from './components/ui/Loading';
+import Error from './pages/Error';
+import Test from './components/ui/Test';
 
 function App() {
   return (
@@ -13,7 +18,12 @@ function App() {
         <AuthRoute path="/login" component={Login} />
         <AuthRoute path="/signup" component={Signup} />
         <Route path="/modal" component={Modal} />
-        <Route path="/" component={Splash} />
+        <ProtectedRoute path="/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/boards/:boardId" component={BoardDisplay} />
+        {/* <Route path="/loading" component={Loading} /> */}
+        <Route path="/test" component={Test} />
+        <AuthRoute exact path="/" component={Splash} />
+        <Route path="/" component={Error} />
       </Switch>
     </BrowserRouter>
   );

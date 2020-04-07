@@ -6,6 +6,7 @@ const typeDefs = `
         _id: ID!
         name: String!
         user: User
+        lists: [List]
     }
     type BoardResponse {
         success: Boolean!
@@ -40,6 +41,10 @@ const resolvers = {
     user: async (parentValue) => {
       const board = await parentValue.populate('user').execPopulate();
       return board.user;
+    },
+    lists: async (parentValue) => {
+      const board = await parentValue.populate('lists').execPopulate();
+      return board.lists;
     },
   },
 };
