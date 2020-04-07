@@ -5,7 +5,6 @@ const ListSchema = new Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   board: {
     type: Schema.Types.ObjectId,
