@@ -13,6 +13,7 @@ const EditCardModal = ({ showModal, setShowModal, cardName, cardDescription }) =
   const content = (
     <>
       <div>
+        {/* header container */}
         <div className="flex justify-between">
           <input 
             type="text" 
@@ -21,24 +22,29 @@ const EditCardModal = ({ showModal, setShowModal, cardName, cardDescription }) =
           />
           <button onClick={closeModal}>X</button>
         </div>
-        <Labels />
-        <div>
-          <h2>Description</h2>
+        {/* main content container */}
+        <div className="flex justify-between">
+          {/* main column container */}
           <div>
-            {
-              showEdit ? (
-                <DescriptionEditForm 
-                  closeEdit={closeEdit}
-                  cardDescription={cardDescription}
-                /> 
-              ) : cardDescription ? <p onClick={openEdit}>{cardDescription}</p> :
-              <p onClick={openEdit}>Add a more detailed description...</p>
-            }
+            <Labels />
+            <h2>Description</h2>
+            <div>
+              {
+                showEdit ? (
+                  <DescriptionEditForm 
+                    closeEdit={closeEdit}
+                    cardDescription={cardDescription}
+                  /> 
+                ) : cardDescription ? <p onClick={openEdit}>{cardDescription}</p> :
+                <p onClick={openEdit}>Add a more detailed description...</p>
+              }
+            </div>
           </div>
-        </div>
-        <div>
-          <Labels />
-          <DueDate />
+          {/* sidebar column container */}
+          <div className="flex flex-col">
+            <Labels />
+            <DueDate />
+          </div>
         </div>
       </div>
     </>
