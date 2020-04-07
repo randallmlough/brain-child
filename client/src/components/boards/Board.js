@@ -43,18 +43,26 @@ const Board = (props) => {
   };
 
   return (
-    <ul>
+    <ul className="flex mt-10">
       {data.board.lists &&
         data.board.lists.map((list) => {
           return <List listId={list._id} />;
         })}
-      <li>
+      <li className="w-1/4">
         {createMode ? (
-          <div ref={ref}>
-            <ListCreateForm boardId={data.board._id} />
+          <div className="mx-5" ref={ref}>
+            <ListCreateForm
+              boardId={data.board._id}
+              setCreateMode={setCreateMode}
+            />
           </div>
         ) : (
-          <button onClick={(e) => handleClick(e)}>Add Another List</button>
+          <button
+            className="transparent-black py-5 px-20 rounded hover add-list-button mx-5"
+            onClick={(e) => handleClick(e)}
+          >
+            Add a List
+          </button>
         )}
       </li>
     </ul>

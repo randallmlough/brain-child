@@ -1,3 +1,5 @@
+import gql from 'graphql-tag';
+
 export const CREATE_BOARD = gql`
   mutation CreateBoard($name: String!, $user: ID!) {
     createBoard(name: $name, user: $user) {
@@ -6,7 +8,9 @@ export const CREATE_BOARD = gql`
       board {
         _id
         name
-        user
+        user {
+          _id
+        }
       }
     }
   }

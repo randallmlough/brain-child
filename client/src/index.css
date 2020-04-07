@@ -615,6 +615,10 @@ video {
   background: linear-gradient(135deg, rgba(11,120,190,1) 0%, rgba(79,103,196,1) 83%);
 }
 
+.list-min-width {
+  min-width: 320px;
+}
+
 .nav-dd {
   display: none;
   background-color: white;
@@ -633,8 +637,33 @@ video {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.less-transparent-black{
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 .transparent-black{
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.more-transparent-black{
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.board-modal{
+  z-index: 20;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+}
+
+.add-list-button:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition-duration: 200ms;
+  transition-property: all;
+}
+
+.word-wrap {
+  word-wrap: break-word;
 }
 
 .sr-only {

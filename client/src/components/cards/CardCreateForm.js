@@ -5,7 +5,7 @@ import { GET_CARDS } from '../../graphql/queries/card';
 import { CREATE_CARD } from '../../graphql/mutations/card';
 import { GET_LIST } from '../../graphql/queries/list';
 
-const CardCreateForm = ({ listId }) => {
+const CardCreateForm = ({ listId, setCreateMode }) => {
   const [title, setTitle] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -49,6 +49,7 @@ const CardCreateForm = ({ listId }) => {
         onSubmit={(e) => {
           e.preventDefault();
           createCard();
+          setCreateMode(false);
         }}
       >
         <div className="mb-3">
@@ -57,7 +58,7 @@ const CardCreateForm = ({ listId }) => {
           </label>
           <input
             id="inputTitle"
-            className=""
+            className="w-full rounded p-2"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -65,7 +66,11 @@ const CardCreateForm = ({ listId }) => {
           />
         </div>
         <div>
-          <button className="" type="submit" disabled={loading}>
+          <button
+            className="text-white bg-success-600 rounded p-2 hover:bg-success-400 transition-all duration-100"
+            type="submit"
+            disabled={loading}
+          >
             Add Card
           </button>
         </div>

@@ -6,11 +6,13 @@ const BoardDisplay = (props) => {
   const { boardId } = props.match.params;
 
   return (
-    <div className="w-full h-full min-h-screen bg-green-500">
+    <div className="h-full w-full min-h-screen bg-green-500">
       <div className="w-full transparent-black px-1 py-1">
         <Navbar />
       </div>
-      <Board boardId={boardId} />
+      <div className="h-screen overflow-x-scroll">
+        <Board boardId={boardId} />
+      </div>
     </div>
   );
 };

@@ -7,7 +7,9 @@ const Card = (props) => {
   const { card } = props;
   return (
     <li>
-      <div>{card.title}</div>
+      <div className="px-2 py-1 bg-white rounded shadow-sm my-2 text-sm">
+        {card.title}
+      </div>
     </li>
   );
 };

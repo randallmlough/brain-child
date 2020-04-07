@@ -43,8 +43,8 @@ const List = (props) => {
   };
 
   return (
-    <ul>
-      <li>{data.list.name}</li>
+    <ul className="bg-gray-400 shadow-md p-2 mx-5 rounded list-min-width self-start">
+      <li className="word-wrap">{data.list.name}</li>
       {data.list.cards &&
         data.list.cards.map((card) => {
           return <Card card={card} />;
@@ -52,10 +52,13 @@ const List = (props) => {
       <li>
         {createMode ? (
           <div ref={ref}>
-            <CardCreateForm listId={data.list._id} />
+            <CardCreateForm
+              listId={data.list._id}
+              setCreateMode={setCreateMode}
+            />
           </div>
         ) : (
-          <button onClick={(e) => handleClick(e)}>Add Another Card</button>
+          <button onClick={(e) => handleClick(e)}>Add a Card</button>
         )}
       </li>
     </ul>
