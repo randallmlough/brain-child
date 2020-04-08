@@ -38,4 +38,44 @@ BoardSchema.statics.createBoard = async function (name, user) {
   };
 };
 
+BoardSchema.statics.updateBoard = async function (id, input) {
+  const Board = this;
+  try {
+    const res = await Board.findOneAndUpdate({ _id: id }, input, {
+      new: true,
+      rawResult: true,
+    });
+    const success = res.ok;
+    const message = success ? 'board was updated' : `board failed to update`;
+    const board = res.value;
+    return {
+      success,
+      message,
+      board,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: 'failed to update board. Double check board ID',
+    };
+  }
+};
+
+BoardSchema.statics.deleteBoard = async function (id) {
+  const Board = this;
+  try {
+    const res = await Board.deleteOne({ _id: id });
+    const success = res.ok;
+    const message = success ? 'board was deleted' : `board failed to delete`;
+    return {
+      success,
+      message,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: 'failed to delete board. Double check board ID',
+    };
+  }
+};
 module.exports = mongoose.model('Board', BoardSchema);
