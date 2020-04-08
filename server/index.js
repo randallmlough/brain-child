@@ -19,6 +19,7 @@ app.use(passport.initialize());
 
 mongoose
   .connect(db, {
+    useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
