@@ -17,7 +17,6 @@ const UserSchema = new Schema({
     min: 8,
     max: 32,
   },
-  // todo: implement later
   boards: [
     {
       type: Schema.Types.ObjectId,

@@ -4,6 +4,9 @@ const typeDefs = `
   type Card {
     _id: ID!
     title: String!
+    description: String
+    dueData: Date
+    label: String
     list: List
   }
   type CardResponse {
@@ -16,8 +19,23 @@ const typeDefs = `
     card(id: ID!): Card
   }
 
+  input updateCardInput {
+    title: String
+    description: String
+    dueData: Date
+    label: String
+    list: ID
+  }
+
+  type DeleteCardResponse {
+    success: Boolean!
+    message: String!
+  }
+
   extend type Mutation {
     createCard(title: String!, list: ID!): CardResponse
+    updateCard(id: ID!, input: updateCardInput!): CardResponse
+    deleteCard(id: ID!): DeleteCardResponse
   }
   `;
 
@@ -33,6 +51,12 @@ const resolvers = {
   Mutation: {
     createCard(_, { title, list }) {
       return Card.createCard(title, list);
+    },
+    updateCard(_, { id, input }) {
+      return Card.updateCard(id, input);
+    },
+    deleteBoard(_, { id }) {
+      return Card.deleteCard(id);
     },
   },
   Card: {

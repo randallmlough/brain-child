@@ -18,8 +18,20 @@ const typeDefs = `
     board(id: ID!): Board
   }
 
+  input updateBoardInput {
+    name: String
+    lists: [ID!]
+  }
+
+  type DeleteBoardResponse {
+    success: Boolean!
+    message: String!
+  }
+
   extend type Mutation {
     createBoard(name: String!, user: ID!): BoardResponse
+    updateBoard(id: ID!, input: updateBoardInput!): BoardResponse
+    deleteBoard(id: ID!): DeleteBoardResponse
   }
   `;
 
@@ -35,6 +47,12 @@ const resolvers = {
   Mutation: {
     createBoard(_, { name, user }) {
       return Board.createBoard(name, user);
+    },
+    updateBoard(_, { id, input }) {
+      return Board.updateBoard(id, input);
+    },
+    deleteBoard(_, { id }) {
+      return Board.deleteBoard(id);
     },
   },
   Board: {
