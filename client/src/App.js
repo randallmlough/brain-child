@@ -17,7 +17,6 @@ function App() {
       <Switch>
         <AuthRoute path="/login" component={Login} />
         <AuthRoute path="/signup" component={Signup} />
-        <Route path="/modal" component={Modal} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/boards/:boardId" component={BoardDisplay} />
         {/* <Route path="/loading" component={Loading} /> */}

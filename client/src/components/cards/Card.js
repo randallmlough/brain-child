@@ -1,16 +1,33 @@
 import React from 'react';
 import { useState } from 'react';
+import EditCardModal from '../ui/cardmodal/editCardModal';
 
 const Card = (props) => {
   const [showModal, setShowModal] = useState(false);
 
   const { card } = props;
   return (
-    <li>
-      <div className="px-2 py-1 bg-white rounded shadow-sm my-2 text-sm">
-        {card.title}
+    <>
+    {showModal ? (
+      <div 
+      className="fixed inset-0 justify-center less-transparent-black z-50 h-screen"
+      >
+        <EditCardModal 
+          setShowModal={setShowModal}
+          cardName={card.title}
+        />
       </div>
-    </li>
+    ) : null
+    }
+      <li>
+        <div 
+          className="px-2 py-1 bg-white rounded shadow-sm my-2 text-sm"
+          onClick={() => setShowModal(true)}
+        >
+          {card.title}
+        </div>
+      </li>
+    </>
   );
 };
 
