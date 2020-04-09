@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import { Draggable } from 'react-beautiful-dnd';
 
 const Card = (props) => {
   const [showModal, setShowModal] = useState(false);

@@ -27,7 +27,6 @@ const resolvers = {
   },
   Mutation: {
     login(_, { email, password }) {
-      // login method used in MERN project
       return User.login(email, password);
     },
     signUp(_, { email, password }) {

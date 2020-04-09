@@ -1,14 +1,20 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useState, useRef, useEffect } from 'react';
 import Loading from '../ui/Loading';
 import Card from '../cards/Card';
 import { GET_LIST } from '../../graphql/queries/list';
 import CardCreateForm from '../cards/CardCreateForm';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { UPDATE_LIST_CARDS } from '../../graphql/mutations/list';
 
 const List = (props) => {
-  const { listId } = props;
+  const { listId, listName } = props;
+
+  const [createMode, setCreateMode] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  let [cardOrder, setCardOrder] = useState([]);
+  const ref = useRef(null);
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -24,31 +30,47 @@ const List = (props) => {
     }
   });
 
-  const [createMode, setCreateMode] = useState(false);
-  const ref = useRef(null);
-
   const { data, loading, error } = useQuery(GET_LIST, {
     variables: {
       listId,
     },
   });
 
-  let [cardOrder, setCardOrder] = useState([]);
-  // let [cardOrder, setCardOrder] = useState([
-  //   { _id: '123', title: 'Title #1' },
-  //   { _id: '234', title: 'Title #2' },
-  //   { _id: '345', title: 'Title #3' },
-  // ]);
+  const mutateOptions = (cards) => ({
+    variables: {
+      listId,
+      input: {
+        cards: cards.map((card) => card._id),
+      },
+    },
+    update(cache, { data: { updateList } }) {
+      if (!updateList.success) setErrorMessage('Cards not reordered');
+      console.log(updateList.list);
+    },
+    onError() {
+      setErrorMessage('Something went wrong');
+    },
+    refetchQueries: () => [
+      {
+        query: GET_LIST,
+        variables: {
+          listId,
+        },
+      },
+    ],
+  });
+
+  const [updateListCards, { loadingMut, errorMut }] = useMutation(
+    UPDATE_LIST_CARDS,
+  );
 
   useEffect(() => {
     if (!loading) {
       if (data.list.cards) {
         setCardOrder(data.list.cards);
-        console.log(cardOrder);
       }
     }
-  }, []);
-  // }, []);
+  });
 
   if (loading) return <Loading />;
   if (!data.list || error) return <h1>List does not exist</h1>;
@@ -89,22 +111,9 @@ const List = (props) => {
     );
 
     setCardOrder(cards);
-
-    // const currentCards = data.list.cards;
-    // const newCardIds = [];
-    // for (let i = 0; i < currentCards.length; i++) {
-    //   newCardIds.push(currentCards[i]._id);
-    // }
-    // newCardIds.splice(source.index, 1);
-    // newCardIds.splice(destination.index, 0, draggableId);
-
-    // console.log(newCardIds);
-    // setCardOrder({ cards: newCardIds });
-
-    // setCardOrder({});
+    updateListCards(mutateOptions(cards));
   };
 
-  console.log(cardOrder);
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId={listId}>
@@ -127,7 +136,7 @@ const List = (props) => {
                         ref={provided.innerRef}
                         key={card._id}
                       >
-                        <Card key={card._id} card={card} index={index} />
+                        <Card card={card} index={index} />
                       </li>
                     )}
                   </Draggable>

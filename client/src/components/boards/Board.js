@@ -47,7 +47,9 @@ const Board = (props) => {
       <ul className="flex mt-10">
         {data.board.lists &&
           data.board.lists.map((list) => {
-            return <List key={list._id} listId={list._id} />;
+            return (
+              <List key={list._id} listName={list.name} listId={list._id} />
+            );
           })}
       </ul>
       {createMode ? (
