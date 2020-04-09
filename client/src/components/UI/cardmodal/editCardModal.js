@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import DescriptionEditForm from './descriptionEditForm';
-import Labels from './labels';
-import DueDate from './dueDate';
+import DescriptionEditForm from './DescriptionEditForm';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import Labels from './Labels';
+import DueDate from './DueDate';
 import Icon from '../Icon';
+import { UPDATE_CARD } from '../../../graphql/mutations/card';
+import TitleEditForm from './TitleEditForm';
 
-const EditCardModal = ({ showModal, setShowModal, cardName, cardDescription }) => {
+const EditCardModal = ({ setShowModal, card }) => {
   const [showEdit, setShowEdit] = useState(false);
-  const [cardTitle, setCardTitle] = useState(cardName);
+  const [showTitleEdit, setShowTitleEdit] = useState(false);
   const closeModal = () => setShowModal(false);
   const openEdit = () => setShowEdit(true);
   const closeEdit = () => setShowEdit(false);
+  const openTitleEdit = () => setShowTitleEdit(true);
+  const closeTitleEdit = () => setShowTitleEdit(false);
 
   const content = (
     <>
@@ -17,11 +22,19 @@ const EditCardModal = ({ showModal, setShowModal, cardName, cardDescription }) =
         <div className="flex flex-col w-11/12 p-4 md:max-w-md mx-auto bg-black-100">
           {/* header container */}
           <div className="flex justify-between">
-            <input 
+            {/* <input 
               type="text" 
               value={cardTitle}
               onChange={(e) => setCardTitle(e.currentTarget.value)}
-            />
+            /> */}
+            {
+              showTitleEdit ? (
+                <TitleEditForm
+                  card={card}
+                  closeTitleEdit={closeTitleEdit}
+                />
+              ) : <span onClick={openTitleEdit}>{card.title}</span>
+            }
             <button onClick={closeModal}>
               <Icon icon="times" className="text-xl" />
             </button>
@@ -36,17 +49,19 @@ const EditCardModal = ({ showModal, setShowModal, cardName, cardDescription }) =
                   showEdit ? (
                     <DescriptionEditForm 
                       closeEdit={closeEdit}
-                      cardDescription={cardDescription}
+                      card={card}
                     /> 
-                  ) : cardDescription ? <p onClick={openEdit}>{cardDescription}</p> :
+                  ) : card.description ? <p onClick={openEdit}>{card.description}</p> :
                   <p onClick={openEdit}>Add a more detailed description...</p>
                 }
               </div>
             </div>
             {/* sidebar column container */}
             <div className="flex flex-col">
-              <Labels />
-              <DueDate />
+              <div>Labels</div>
+              <div>Due Date</div>
+              {/* <Labels />
+              <DueDate /> */}
             </div>
           </div>
         </div>

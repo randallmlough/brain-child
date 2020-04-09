@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import EditCardModal from '../ui/cardmodal/editCardModal';
+import EditCardModal from '../ui/cardmodal/EditCardModal';
 
 const Card = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -14,7 +14,8 @@ const Card = (props) => {
       >
         <EditCardModal 
           setShowModal={setShowModal}
-          cardName={card.title}
+          card={card}
+
         />
       </div>
     ) : null

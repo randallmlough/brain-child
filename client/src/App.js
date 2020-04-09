@@ -4,7 +4,6 @@ import { ProtectedRoute, AuthRoute } from './util/Route_util';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Splash from './pages/Splash';
-import Modal from './pages/Modal';
 import Dashboard from './pages/Dashboard';
 import BoardDisplay from './pages/BoardDisplay';
 // import Loading from './components/ui/Loading';
