@@ -43,29 +43,29 @@ const Board = (props) => {
   };
 
   return (
-    <ul className="flex mt-10">
-      {data.board.lists &&
-        data.board.lists.map((list) => {
-          return <List listId={list._id} />;
-        })}
-      <li className="w-1/4">
-        {createMode ? (
-          <div className="mx-5" ref={ref}>
-            <ListCreateForm
-              boardId={data.board._id}
-              setCreateMode={setCreateMode}
-            />
-          </div>
-        ) : (
-          <button
-            className="transparent-black py-5 px-20 rounded hover add-list-button mx-5"
-            onClick={(e) => handleClick(e)}
-          >
-            Add a List
-          </button>
-        )}
-      </li>
-    </ul>
+    <div className="flex align-baseline">
+      <ul className="flex mt-10">
+        {data.board.lists &&
+          data.board.lists.map((list) => {
+            return <List key={list._id} listId={list._id} />;
+          })}
+      </ul>
+      {createMode ? (
+        <div className="mx-5 mt-10" ref={ref}>
+          <ListCreateForm
+            boardId={data.board._id}
+            setCreateMode={setCreateMode}
+          />
+        </div>
+      ) : (
+        <button
+          className="transparent-black py-5 px-20 rounded hover add-list-button mx-5 mt-10"
+          onClick={(e) => handleClick(e)}
+        >
+          Add a List
+        </button>
+      )}
+    </div>
   );
 };
 
