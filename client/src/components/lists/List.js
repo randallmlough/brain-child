@@ -69,14 +69,6 @@ const List = (props) => {
     onError() {
       setErrorMessage('Something went wrong');
     },
-    // refetchQueries: () => [
-    //   {
-    //     query: GET_LIST,
-    //     variables: {
-    //       listId,
-    //     },
-    //   },
-    // ],
   });
 
   const [updateListCards, { loadingMut, errorMut }] = useMutation(
