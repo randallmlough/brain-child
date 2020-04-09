@@ -9,7 +9,7 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { UPDATE_LIST_CARDS } from '../../graphql/mutations/list';
 
 const List = (props) => {
-  const { listId, listName } = props;
+  const { listId } = props;
 
   const [createMode, setCreateMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,33 +44,44 @@ const List = (props) => {
       },
     },
     update(cache, { data: { updateList } }) {
+      if (updateList.success) {
+        const data = cache.readQuery({
+          query: GET_LIST,
+          variables: {
+            listId,
+          },
+        });
+
+        const list = Object.assign({}, data.list);
+        list.cards = updateList.list.cards;
+        cache.writeQuery({
+          query: GET_LIST,
+          variables: {
+            listId,
+          },
+          data: {
+            list,
+          },
+        });
+      }
       if (!updateList.success) setErrorMessage('Cards not reordered');
-      console.log(updateList.list);
     },
     onError() {
       setErrorMessage('Something went wrong');
     },
-    refetchQueries: () => [
-      {
-        query: GET_LIST,
-        variables: {
-          listId,
-        },
-      },
-    ],
+    // refetchQueries: () => [
+    //   {
+    //     query: GET_LIST,
+    //     variables: {
+    //       listId,
+    //     },
+    //   },
+    // ],
   });
 
   const [updateListCards, { loadingMut, errorMut }] = useMutation(
     UPDATE_LIST_CARDS,
   );
-
-  useEffect(() => {
-    if (!loading) {
-      if (data.list.cards) {
-        setCardOrder(data.list.cards);
-      }
-    }
-  });
 
   if (loading) return <Loading />;
   if (!data.list || error) return <h1>List does not exist</h1>;
@@ -105,7 +116,7 @@ const List = (props) => {
     }
 
     const cards = reorder(
-      cardOrder,
+      data.list.cards,
       result.source.index,
       result.destination.index,
     );
@@ -119,10 +130,9 @@ const List = (props) => {
       <Droppable droppableId={listId}>
         {(provided) => (
           <div className="bg-gray-400 shadow-md p-2 mx-5 rounded list-min-width self-start">
-            {provided.placeholder}
             <h3>{data.list.name}</h3>
             <ul ref={provided.innerRef} {...provided.droppableProps}>
-              {cardOrder.map((card, index) => {
+              {data.list.cards.map((card, index) => {
                 return (
                   <Draggable
                     draggableId={card._id}
@@ -142,6 +152,7 @@ const List = (props) => {
                   </Draggable>
                 );
               })}
+              {provided.placeholder}
             </ul>
             {createMode ? (
               <div ref={ref}>
