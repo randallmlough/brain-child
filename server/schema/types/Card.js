@@ -5,7 +5,7 @@ const typeDefs = `
     _id: ID!
     title: String!
     description: String
-    dueData: Date
+    dueDate: Date
     label: String
     list: List
   }
@@ -22,7 +22,7 @@ const typeDefs = `
   input updateCardInput {
     title: String
     description: String
-    dueData: Date
+    dueDate: Date
     label: String
     list: ID
   }
