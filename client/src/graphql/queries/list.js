@@ -5,6 +5,10 @@ export const GET_LISTS = gql`
     lists {
       _id
       name
+      cards {
+        _id
+        title
+      }
     }
   }
 `;

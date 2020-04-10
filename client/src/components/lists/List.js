@@ -5,15 +5,13 @@ import Loading from '../ui/Loading';
 import Card from '../cards/Card';
 import { GET_LIST } from '../../graphql/queries/list';
 import CardCreateForm from '../cards/CardCreateForm';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { UPDATE_LIST_CARDS } from '../../graphql/mutations/list';
 
 const List = (props) => {
-  const { listId } = props;
+  const { listId, list } = props;
 
   const [createMode, setCreateMode] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  let [cardOrder, setCardOrder] = useState([]);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -30,54 +28,6 @@ const List = (props) => {
     }
   });
 
-  const { data, loading, error } = useQuery(GET_LIST, {
-    variables: {
-      listId,
-    },
-  });
-
-  const mutateOptions = (cards) => ({
-    variables: {
-      listId,
-      input: {
-        cards: cards.map((card) => card._id),
-      },
-    },
-    update(cache, { data: { updateList } }) {
-      if (updateList.success) {
-        const data = cache.readQuery({
-          query: GET_LIST,
-          variables: {
-            listId,
-          },
-        });
-
-        const list = Object.assign({}, data.list);
-        list.cards = updateList.list.cards;
-        cache.writeQuery({
-          query: GET_LIST,
-          variables: {
-            listId,
-          },
-          data: {
-            list,
-          },
-        });
-      }
-      if (!updateList.success) setErrorMessage('Cards not reordered');
-    },
-    onError() {
-      setErrorMessage('Something went wrong');
-    },
-  });
-
-  const [updateListCards, { loadingMut, errorMut }] = useMutation(
-    UPDATE_LIST_CARDS,
-  );
-
-  if (loading) return <Loading />;
-  if (!data.list || error) return <h1>List does not exist</h1>;
-
   const handleClick = (e) => {
     e.preventDefault();
     if (!createMode) {
@@ -85,81 +35,50 @@ const List = (props) => {
     }
   };
 
-  const reorder = (list, startIndex, endIndex) => {
-    let result = Array.from(list);
-    let [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
-  };
-
-  const onDragEnd = (result) => {
-    const { destination, source, draggableId } = result;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    const cards = reorder(
-      data.list.cards,
-      result.source.index,
-      result.destination.index,
-    );
-
-    setCardOrder(cards);
-    updateListCards(mutateOptions(cards));
-  };
-
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId={listId}>
-        {(provided) => (
-          <div className="bg-gray-400 shadow-md p-2 mx-5 rounded list-min-width self-start">
-            <h3>{data.list.name}</h3>
-            <ul ref={provided.innerRef} {...provided.droppableProps}>
-              {data.list.cards.map((card, index) => {
-                return (
-                  <Draggable
-                    draggableId={card._id}
-                    key={card._id}
-                    index={index}
-                  >
-                    {(provided) => (
-                      <li
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        ref={provided.innerRef}
-                        key={card._id}
-                      >
-                        <Card card={card} index={index} />
-                      </li>
-                    )}
-                  </Draggable>
-                );
-              })}
-              {provided.placeholder}
-            </ul>
-            {createMode ? (
-              <div ref={ref}>
-                <CardCreateForm
-                  listId={data.list._id}
-                  setCreateMode={setCreateMode}
-                />
-              </div>
-            ) : (
-              <button onClick={(e) => handleClick(e)}>Add a Card</button>
-            )}
-          </div>
-        )}
-      </Droppable>
-    </DragDropContext>
+    <Droppable droppableId={listId}>
+      {(provided, snapshot) => (
+        <div
+          className={
+            snapshot.isDraggingOver
+              ? 'transparent-black text-black shadow-md p-2 mx-5 rounded list-min-width self-start'
+              : 'bg-gray-300 shadow-md p-2 mx-5 rounded list-min-width self-start'
+          }
+        >
+          <h3>{list.name}</h3>
+          <ul
+            className="min-list-height"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            {list.cards.map((card, index) => {
+              return (
+                <Draggable draggableId={card._id} key={card._id} index={index}>
+                  {(provided, snapshot) => (
+                    <li
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      ref={provided.innerRef}
+                      key={card._id}
+                    >
+                      <Card card={card} isDragging={snapshot.isDragging} />
+                    </li>
+                  )}
+                </Draggable>
+              );
+            })}
+            {provided.placeholder}
+          </ul>
+          {createMode ? (
+            <div ref={ref}>
+              <CardCreateForm listId={listId} setCreateMode={setCreateMode} />
+            </div>
+          ) : (
+            <button onClick={(e) => handleClick(e)}>Add a Card</button>
+          )}
+        </div>
+      )}
+    </Droppable>
   );
 };
 
