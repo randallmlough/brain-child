@@ -5,19 +5,19 @@ import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_CARD_DUEDATE } from '../../../graphql/mutations/card';
 
 const DueDate = ({ card, setShowDatePicker}) => {
-  const [dueData, setDueData] = useState(new Date);
+  const [dueDate, setDueDate] = useState(new Date);
 
   const [updateCardDueDate, { loading, error }] = useMutation(UPDATE_CARD_DUEDATE,
     {
       variables: {
         cardId: card._id,
-        input: { dueData }
+        input: { dueDate }
       }
     })
 
   useEffect(() => {
     updateCardDueDate();
-  }, [dueData])
+  }, [dueDate])
 
   return(
     <div className="flex justify-center mt-32">
@@ -26,12 +26,12 @@ const DueDate = ({ card, setShowDatePicker}) => {
           X
         </button>
         <DatePicker
-          selected={dueData}
-          onChange={date => setDueData(date)}
+          selected={dueDate}
+          onChange={date => setDueDate(date)}
         />
         <DatePicker
-          selected={dueData}
-          onChange={date => setDueData(date)}
+          selected={dueDate}
+          onChange={date => setDueDate(date)}
           showTimeSelect
           showTimeSelectOnly
           timeIntervals={15}

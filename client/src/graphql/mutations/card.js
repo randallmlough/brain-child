@@ -51,7 +51,7 @@ export const UPDATE_CARD_LABEL = gql`
     }
   }
 `;
-//change 'dueData' to dueDate
+
 export const UPDATE_CARD_DUEDATE = gql`
   mutation UpdateCardDueDate($cardId: ID!, $input: updateCardInput!){
     updateCard(id: $cardId, input: $input){
@@ -59,7 +59,7 @@ export const UPDATE_CARD_DUEDATE = gql`
       message
       card {
         _id
-        dueData
+        dueDate
       }
     }
   }

@@ -9,7 +9,6 @@ export const GET_CARDS = gql`
   }
 `;
 
-//change dueData to dueDate
 export const GET_CARD = gql`
   query Card($cardId: ID!) {
     card(id: $cardId) {
@@ -17,7 +16,7 @@ export const GET_CARD = gql`
       title
       description
       label
-      dueData
+      dueDate
       list{
         _id
       }
