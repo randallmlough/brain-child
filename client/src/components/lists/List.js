@@ -36,7 +36,7 @@ const List = (props) => {
   };
 
   return (
-    <Droppable droppableId={listId}>
+    <Droppable key={listId} droppableId={listId}>
       {(provided, snapshot) => (
         <div
           className={
@@ -44,12 +44,13 @@ const List = (props) => {
               ? 'transparent-black text-black shadow-md p-2 mx-5 rounded list-min-width self-start'
               : 'bg-gray-300 shadow-md p-2 mx-5 rounded list-min-width self-start'
           }
+          key={listId}
         >
           <h3>{list.name}</h3>
           <ul
-            className="min-list-height"
-            ref={provided.innerRef}
             {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="min-list-height"
           >
             {list.cards.map((card, index) => {
               return (
@@ -61,7 +62,11 @@ const List = (props) => {
                       ref={provided.innerRef}
                       key={card._id}
                     >
-                      <Card card={card} isDragging={snapshot.isDragging} />
+                      <Card
+                        card={card}
+                        key={card._id}
+                        isDragging={snapshot.isDragging}
+                      />
                     </li>
                   )}
                 </Draggable>

@@ -14,32 +14,32 @@ const CardCreateForm = ({ listId, setCreateMode }) => {
       title,
       list: listId,
     },
-    update(cache, { data: { createCard } }) {
-      if (createCard.success) {
-        const data = cache.readQuery({
-          query: GET_LIST,
-          variables: {
-            listId,
-          },
-        });
-        const list = Object.assign({}, data.list);
-        list.cards = list.cards.concat(createCard.card);
-        cache.writeQuery({
-          query: GET_LIST,
-          variables: {
-            listId,
-          },
-          data: {
-            list,
-          },
-        });
-      }
-      if (!createCard.card) setErrorMessage('Card was not created');
-    },
+    // update(cache, { data: { createCard } }) {
+    //   if (createCard.success) {
+    //     const data = cache.readQuery({
+    //       query: GET_LIST,
+    //       variables: {
+    //         listId,
+    //       },
+    //     });
+    //     const list = Object.assign({}, data.list);
+    //     list.cards = list.cards.concat(createCard.card);
+    //     cache.writeQuery({
+    //       query: GET_LIST,
+    //       variables: {
+    //         listId,
+    //       },
+    //       data: {
+    //         list,
+    //       },
+    //     });
+    //   }
+    //   if (!createCard.card) setErrorMessage('Card was not created');
+    // },
     onError() {
       setErrorMessage('Something went wrong');
     },
-    refetchQueries: [{ query: GET_CARDS }],
+    refetchQueries: [{ query: GET_LIST, variables: { listId } }],
   });
 
   return (
