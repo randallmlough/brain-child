@@ -9,12 +9,18 @@ export const GET_CARDS = gql`
   }
 `;
 
+//change dueData to dueDate
 export const GET_CARD = gql`
   query Card($cardId: ID!) {
-    card(_id: $cardId) {
+    card(id: $cardId) {
       _id
       title
-      list
+      description
+      label
+      dueData
+      list{
+        _id
+      }
     }
   }
 `;

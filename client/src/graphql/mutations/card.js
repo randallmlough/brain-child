@@ -39,28 +39,28 @@ export const UPDATE_CARD_DESCRIPTION = gql`
   }
 `;
 
-// export const UPDATE_CARD_DUEDATE = gql`
-//   mutation UpdateCardDueDate($cardId: ID!, $input: updateCardInput!){
-//     updateCard(id: $cardId, input: $input){
-//       success
-//       message
-//       card {
-//         _id
-//         dueDate
-//       }
-//     }
-//   }
-// `;
-
-// export const UPDATE_CARD_LABEL = gql`
-//   mutation UpdateCardLabel($cardId: ID!, $input: updateCardInput!){
-//     updateCard(id: $cardId, input: $input){
-//       success
-//       message
-//       card {
-//         _id
-//         label
-//       }
-//     }
-//   }
-// `;
+export const UPDATE_CARD_LABEL = gql`
+  mutation UpdateCardLabel($cardId: ID!, $input: updateCardInput!){
+    updateCard(id: $cardId, input: $input){
+      success
+      message
+      card {
+        _id
+        label
+      }
+    }
+  }
+`;
+//change 'dueData' to dueDate
+export const UPDATE_CARD_DUEDATE = gql`
+  mutation UpdateCardDueDate($cardId: ID!, $input: updateCardInput!){
+    updateCard(id: $cardId, input: $input){
+      success
+      message
+      card {
+        _id
+        dueData
+      }
+    }
+  }
+`;

@@ -3,12 +3,12 @@ import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_CARD_DESCRIPTION } from '../../../graphql/mutations/card';
 
 
-const DescriptionEditForm = ( { closeEdit, card } ) => {
+const DescriptionEditForm = ( { card, closeEdit } ) => {
   const [description, setDescription] = useState(card.description);
   const ref = useRef(null);
 
   const [updateCardDescription, {loading, error}] = useMutation(UPDATE_CARD_DESCRIPTION,{
-    variable: {
+    variables: {
       cardId: card._id,
       input: { description }
     },
@@ -25,6 +25,7 @@ const DescriptionEditForm = ( { closeEdit, card } ) => {
       const docClick = function (e) {
         if (!ref.current.contains(e.target)) {
           updateCardDescription();
+          closeEdit();
         }
       };
       document.addEventListener('click', docClick);
@@ -37,23 +38,17 @@ const DescriptionEditForm = ( { closeEdit, card } ) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateCardDescription();
+    closeEdit();
   }
 
   const formContent = (
     <div>
       <form onSubmit={handleSubmit} ref={ref}>
-        {
-          card.description ? 
             <textarea 
-              value={card.description} 
+              placeholder="Add a more detailed description..."
+              value={description} 
               onChange={(e) => setDescription(e.currentTarget.value)}
             />
-          :
-            <textarea
-              placeholder="Add a more detailed description..."//whatever is passed in from editCardModal
-              onChange={(e) => setDescription(e.currentTarget.value)}
-            />
-        }
         <input
           type="submit"
           value="Save"

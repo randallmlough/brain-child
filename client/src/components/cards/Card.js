@@ -15,7 +15,6 @@ const Card = (props) => {
         <EditCardModal 
           setShowModal={setShowModal}
           card={card}
-
         />
       </div>
     ) : null
