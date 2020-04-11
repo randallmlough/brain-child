@@ -24,7 +24,4 @@ EXPOSE 5000
 # for heroku
 EXPOSE $PORT
 
-ENV MONGO_URI=mongodb+srv://dev:cluster0password@cluster0-fjvoh.mongodb.net/test?retryWrites=true&w=majority
-ENV JWT_SECRET=secretSHHHHHHHHHHHHHHHHHHHHHHHHHHH
-
 CMD ["npm", "start"]
