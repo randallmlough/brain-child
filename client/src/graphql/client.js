@@ -77,7 +77,6 @@ const createClient = async () => {
         query: CURRENT_USER,
       })
       .then(({ data }) => {
-        console.log(data);
         if (!data || !data.me) client.resetStore();
       });
   }
