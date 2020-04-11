@@ -1,12 +1,8 @@
 import React from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useState, useRef, useEffect } from 'react';
-import Loading from '../ui/Loading';
 import Card from '../cards/Card';
-import { GET_LIST } from '../../graphql/queries/list';
 import CardCreateForm from '../cards/CardCreateForm';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { UPDATE_LIST_CARDS } from '../../graphql/mutations/list';
 
 const List = (props) => {
   const { listId, list } = props;
