@@ -27,22 +27,34 @@ const EditCardModal = ({ setShowModal, card }) => {
   if(loading) return "loading";
   if(error) return "there is an error";
 
+  const options = {
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric', second: 'numeric',
+    timeZone: 'America/Los_Angeles'
+  }
+
   card = data.card;
 
   const content = (
-    <>
       <div className="flex justify-center mt-24">
-        <div className="flex flex-col w-11/12 p-4 md:max-w-md mx-auto bg-black-100">
+        <div className="flex flex-col p-4 w-6/12 bg-gray-100 rounded-sm">
           {/* header container */}
           <div className="flex justify-between">
-            {
-              showTitleEdit ? (
-                <TitleEditForm
-                  card={card}
-                  closeTitleEdit={closeTitleEdit}
-                />
-              ) : <span onClick={openTitleEdit}>{card.title}</span>
-            }
+            <div className="flex w-11/12">
+              <Icon icon="window-maximize" className="text-xl mr-2 self-center" />
+              {
+                showTitleEdit ? (
+                  <TitleEditForm
+                    card={card}
+                    closeTitleEdit={closeTitleEdit}
+                  />
+                ) : <div onClick={openTitleEdit}
+                      className="text-2xl font-medium p-1"
+                    >
+                      {card.title}
+                    </div>
+              }
+            </div>
             <button onClick={closeModal}>
               <Icon icon="times" className="text-xl" />
             </button>
@@ -50,8 +62,39 @@ const EditCardModal = ({ setShowModal, card }) => {
           {/* main content container */}
           <div className="flex justify-between">
             {/* main column container */}
-            <div>
-              <h2>Description</h2>
+            <div className="w-9/12">
+              <div className="flex w-full ml-8">
+                {
+                  card.label ? (
+                    <div className="mr-1">
+                      <h3 className="uppercase">Labels</h3>
+                      <div onClick={() => setShowLabelsModal(true)}
+                        className="bg-gray-300 hover:bg-black-100 rounded-sm box-border cursor-pointer p-1 text-center"
+                      >
+                        {card.label}
+                      </div>
+                    </div>
+                  ) : null 
+                }
+                {
+                  card.dueDate ? (
+                    <div className="ml-1">
+                      <h3 className="uppercase">Due Date</h3>
+                      <div onClick={() => setShowDatePicker(true)}
+                        className="bg-gray-300 hover:bg-black-100 rounded-sm box-border cursor-pointer p-1"
+                      >
+                      {  
+                        new Intl.DateTimeFormat('en-Us',options).format(card.dueDate)
+                      }
+                      </div>
+                    </div>
+                  ) : null 
+                }
+              </div>
+              <div className="flex"> 
+                <Icon icon="bars" className="text-xl self-center mr-2" />
+                <h2 className="text-xl font-medium p-1">Description</h2>
+              </div>
               <div>
                 {
                   showEdit ? (
@@ -59,17 +102,23 @@ const EditCardModal = ({ setShowModal, card }) => {
                       card={card}
                       closeEdit={closeEdit}
                     /> 
-                  ) : card.description ? <p onClick={openEdit}>{card.description}</p> :
-                  <p onClick={openEdit}>Add a more detailed description...</p>
+                  ) : card.description ? 
+                  <p onClick={openEdit} className="ml-8 cursor-pointer">
+                    {card.description}
+                  </p> 
+                  :
+                  <p onClick={openEdit} className="ml-8 cursor-pointer">
+                    Add a more detailed description...
+                  </p>
                 }
               </div>
             </div>
             {/* sidebar column container */}
-            <div className="flex flex-col">
+            <div className="flex flex-col w-3/12">
               {
                 showLabelsModal ? (
                   <div
-                    className="fixed inset-0 justify-center z-50 h-screen"
+                    className="fixed inset-0 justify-center z-50 h-screen shadow-lg p-2"
                   >
                     <Labels
                       card={card}
@@ -80,32 +129,34 @@ const EditCardModal = ({ setShowModal, card }) => {
               }
               <div
                 onClick={() => setShowLabelsModal(true)}
-              >
+                className="bg-gray-300 hover:bg-black-100 rounded p-2 mb-1 cursor-pointer"
+                >
+                <Icon icon="tag" className="mx-2 text-white" />
                 Labels
               </div>
               {
                 showDatePicker ? (
                   <div
-                    className="fixed inset-0 justify-center z-50 h-screen"
+                  className="fixed inset-0 justify-center z-50 h-screen"
                   >
                     <DueDate 
                       card={card}
                       setShowDatePicker={setShowDatePicker}
-                    />
+                      />
                   </div>
                 ) : null
               }
               <div
                 onClick={() => setShowDatePicker(true)}
+                className="bg-gray-300 rounded p-2 mt-1 hover:bg-black-100 cursor-pointer"
               >
+                <Icon icon="clock" className="text-white mx-2" />
                 Due Date
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
-
   )
 
   return content;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { UPDATE_CARD_DESCRIPTION } from '../../../graphql/mutations/card';
+import Icon from '../Icon';
 
 
 const DescriptionEditForm = ( { card, closeEdit } ) => {
@@ -43,20 +44,23 @@ const DescriptionEditForm = ( { card, closeEdit } ) => {
 
   const formContent = (
     <div>
-      <form onSubmit={handleSubmit} ref={ref}>
+      <form onSubmit={handleSubmit} ref={ref} className="ml-8">
             <textarea 
               placeholder="Add a more detailed description..."
               value={description} 
               onChange={(e) => setDescription(e.currentTarget.value)}
+              className="w-full resize-none h-32 rounded border-primary-400
+              border-2 border-solid"
             />
         <input
           type="submit"
           value="Save"
+          className="rounded bg-green-500 p-2 text-white mr-2 hover:bg-green-400 cursor-pointer"
         />
+        <button onClick={closeEdit}>
+          <Icon icon="times" className="text-xl font-hairline" />
+        </button>
       </form>
-      <button onClick={closeEdit}>
-        X
-      </button>
     </div>
   )
 

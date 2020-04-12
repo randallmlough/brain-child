@@ -37,17 +37,13 @@ const TitleEditForm = ( { card, closeTitleEdit } ) => {
   });
 
   return(
-    <form onSubmit={(e) => {
-      e.preventDefault();
-      updateCardTitle();
-    }}>
       <input
+        className="w-11/12 rounded p-1 text-2xl font-medium"
         ref={ref} 
         type="text" 
         value={title}
         onChange={(e) => setTitle(e.currentTarget.value)}
-      /> 
-    </form>
+      />
   );
 }
 
