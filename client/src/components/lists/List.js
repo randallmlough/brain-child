@@ -1,14 +1,39 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import Card from '../cards/Card';
+import { useMutation } from '@apollo/react-hooks';
+import { DELETE_LIST } from '../../graphql/mutations/list';
 import CardCreateForm from '../cards/CardCreateForm';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import Icon from '../ui/Icon';
+import { GET_BOARD } from '../../graphql/queries/board';
 
 const List = (props) => {
-  const { listId, list } = props;
+  const { listId, list, boardId } = props;
 
   const [createMode, setCreateMode] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const ref = useRef(null);
+
+  const [deleteList, { loading, error }] = useMutation(DELETE_LIST, {
+    variables: {
+      listId,
+    },
+    update(cache, { data: { deleteList } }) {
+      if (!deleteList.success) setErrorMessage('List was not deleted');
+    },
+    onError() {
+      setErrorMessage('Something went wrong');
+    },
+    refetchQueries: [
+      {
+        query: GET_BOARD,
+        variables: {
+          boardId,
+        },
+      },
+    ],
+  });
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -42,7 +67,14 @@ const List = (props) => {
           }
           key={listId}
         >
-          <h3>{list.name}</h3>
+          <div className="flex justify-between">
+            <h3>{list.name}</h3>
+            <Icon
+              className="text-gray-500 text-sm"
+              icon="times"
+              onClick={() => deleteList()}
+            />
+          </div>
           <ul
             {...provided.droppableProps}
             ref={provided.innerRef}
@@ -75,7 +107,13 @@ const List = (props) => {
               <CardCreateForm listId={listId} setCreateMode={setCreateMode} />
             </div>
           ) : (
-            <button onClick={(e) => handleClick(e)}>Add a Card</button>
+            <button
+              className="focus:outline-none"
+              onClick={(e) => handleClick(e)}
+            >
+              <Icon icon="plus" className="text-sm text-gray-600 mx-1"></Icon>
+              <span className="text-gray-600 text-sm">Add a Card</span>
+            </button>
           )}
         </div>
       )}

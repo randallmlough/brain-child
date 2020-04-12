@@ -15,3 +15,16 @@ export const CREATE_BOARD = gql`
     }
   }
 `;
+
+export const EDIT_BOARD_NAME = gql`
+  mutation UpdateBoardName($boardId: ID!, $input: updateBoardInput!) {
+    updateBoard(id: $boardId, input: $input) {
+      success
+      message
+      board {
+        _id
+        name
+      }
+    }
+  }
+`;

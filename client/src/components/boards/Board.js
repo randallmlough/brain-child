@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import Loading from '../ui/Loading';
 import List from '../lists/List';
 import ListCreateForm from '../lists/ListCreateForm';
+import BoardNameEditForm from './BoardNameEditForm';
 import { GET_BOARD } from '../../graphql/queries/board';
 import { GET_LIST } from '../../graphql/queries/list';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -13,6 +14,7 @@ const Board = (props) => {
   const { boardId } = props;
 
   const [createMode, setCreateMode] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const ref = useRef(null);
 
@@ -115,34 +117,50 @@ const Board = (props) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex align-baseline">
-        <ul className="flex mt-10">
-          {data.board.lists.map((list, index) => {
-            return (
-              <List
-                key={list._id}
-                list={list}
-                listId={list._id}
-                index={index}
-              />
-            );
-          })}
-        </ul>
-        {createMode ? (
-          <div className="mx-5 mt-10" ref={ref}>
-            <ListCreateForm
+      <div>
+        <div className="mt-4 mx-5 text-white text-xl w-full">
+          {editMode ? (
+            <BoardNameEditForm
               boardId={data.board._id}
-              setCreateMode={setCreateMode}
+              boardName={data.board.name}
+              setEditMode={setEditMode}
             />
+          ) : (
+            <h3 onClick={() => setEditMode(true)}>{data.board.name}</h3>
+          )}
+        </div>
+        <div className="flex align-baseline">
+          <ul className="flex mt-8">
+            {data.board.lists.map((list, index) => {
+              return (
+                <List
+                  key={list._id}
+                  boardId={data.board._id}
+                  list={list}
+                  listId={list._id}
+                  index={index}
+                />
+              );
+            })}
+          </ul>
+          <div className="mr-5 mt-8">
+            {createMode ? (
+              <div className="mx-5" ref={ref}>
+                <ListCreateForm
+                  boardId={data.board._id}
+                  setCreateMode={setCreateMode}
+                />
+              </div>
+            ) : (
+              <button
+                className="transparent-black py-5 px-10 rounded hover list-min-width add-list-button mx-5 focus:outline-none"
+                onClick={(e) => handleClick(e)}
+              >
+                Add a List
+              </button>
+            )}
           </div>
-        ) : (
-          <button
-            className="transparent-black py-5 px-20 rounded hover add-list-button mx-5 mt-10"
-            onClick={(e) => handleClick(e)}
-          >
-            Add a List
-          </button>
-        )}
+        </div>
       </div>
     </DragDropContext>
   );
