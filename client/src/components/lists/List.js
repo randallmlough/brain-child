@@ -1,13 +1,14 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
 import { useState, useRef, useEffect } from 'react';
-import Loading from '../ui/Loading';
 import Card from '../cards/Card';
-import { GET_LIST } from '../../graphql/queries/list';
 import CardCreateForm from '../cards/CardCreateForm';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 const List = (props) => {
-  const { listId } = props;
+  const { listId, list } = props;
+
+  const [createMode, setCreateMode] = useState(false);
+  const ref = useRef(null);
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -23,18 +24,6 @@ const List = (props) => {
     }
   });
 
-  const [createMode, setCreateMode] = useState(false);
-  const ref = useRef(null);
-
-  const { data, loading, error } = useQuery(GET_LIST, {
-    variables: {
-      listId,
-    },
-  });
-
-  if (loading) return <Loading />;
-  if (!data.list || error) return <h1>List does not exist</h1>;
-
   const handleClick = (e) => {
     e.preventDefault();
     if (!createMode) {
@@ -43,25 +32,54 @@ const List = (props) => {
   };
 
   return (
-    <ul className="bg-gray-400 shadow-md p-2 mx-5 rounded list-min-width self-start">
-      <li className="word-wrap">{data.list.name}</li>
-      {data.list.cards &&
-        data.list.cards.map((card) => {
-          return <Card card={card} />;
-        })}
-      <li>
-        {createMode ? (
-          <div ref={ref}>
-            <CardCreateForm
-              listId={data.list._id}
-              setCreateMode={setCreateMode}
-            />
-          </div>
-        ) : (
-          <button onClick={(e) => handleClick(e)}>Add a Card</button>
-        )}
-      </li>
-    </ul>
+    <Droppable key={listId} droppableId={listId}>
+      {(provided, snapshot) => (
+        <div
+          className={
+            snapshot.isDraggingOver
+              ? 'transparent-black text-black shadow-md p-2 mx-5 rounded list-min-width self-start'
+              : 'bg-gray-300 shadow-md p-2 mx-5 rounded list-min-width self-start'
+          }
+          key={listId}
+        >
+          <h3>{list.name}</h3>
+          <ul
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="min-list-height"
+          >
+            {list.cards.map((card, index) => {
+              return (
+                <Draggable draggableId={card._id} key={card._id} index={index}>
+                  {(provided, snapshot) => (
+                    <li
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                      ref={provided.innerRef}
+                      key={card._id}
+                    >
+                      <Card
+                        card={card}
+                        key={card._id}
+                        isDragging={snapshot.isDragging}
+                      />
+                    </li>
+                  )}
+                </Draggable>
+              );
+            })}
+            {provided.placeholder}
+          </ul>
+          {createMode ? (
+            <div ref={ref}>
+              <CardCreateForm listId={listId} setCreateMode={setCreateMode} />
+            </div>
+          ) : (
+            <button onClick={(e) => handleClick(e)}>Add a Card</button>
+          )}
+        </div>
+      )}
+    </Droppable>
   );
 };
 

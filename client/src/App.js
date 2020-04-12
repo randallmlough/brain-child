@@ -8,7 +8,7 @@ import Dashboard from './pages/Dashboard';
 import BoardDisplay from './pages/BoardDisplay';
 // import Loading from './components/ui/Loading';
 import Error from './pages/Error';
-import Test from './components/ui/Test';
+// import Test from './components/ui/Test';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/boards/:boardId" component={BoardDisplay} />
         {/* <Route path="/loading" component={Loading} /> */}
-        <Route path="/test" component={Test} />
+        {/* <Route path="/test" component={Test} /> */}
         <AuthRoute exact path="/" component={Splash} />
         <Route path="/" component={Error} />
       </Switch>

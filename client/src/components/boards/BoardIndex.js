@@ -28,7 +28,7 @@ const BoardIndex = () => {
           <li className="text-center text-2xl mb-5">Your Boards:</li>
           {data.me.boards &&
             data.me.boards.map((board) => {
-              return <BoardIndexItem board={board} />;
+              return <BoardIndexItem key={board._id} board={board} />;
             })}
           <li className="flex justify-center my-5">
             <button

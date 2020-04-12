@@ -16,3 +16,20 @@ export const CREATE_LIST = gql`
     }
   }
 `;
+
+export const UPDATE_LIST_CARDS = gql`
+  mutation UpdateListCards($listId: ID!, $input: updateListInput!) {
+    updateList(id: $listId, input: $input) {
+      success
+      message
+      list {
+        _id
+        name
+        cards {
+          _id
+          title
+        }
+      }
+    }
+  }
+`;

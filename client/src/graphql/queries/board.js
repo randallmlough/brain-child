@@ -17,6 +17,10 @@ export const GET_BOARD = gql`
       lists {
         _id
         name
+        cards {
+          _id
+          title
+        }
       }
     }
   }

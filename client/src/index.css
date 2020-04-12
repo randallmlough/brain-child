@@ -638,6 +638,10 @@ video {
   top: 40px;
 }
 
+.min-list-height {
+  min-height: 20px;
+}
+
 .show {
   display: block;
 }
