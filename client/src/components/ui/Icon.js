@@ -9,19 +9,24 @@ import {
   faHome,
   faTh,
   faCircle,
-<<<<<<< HEAD:client/src/components/UI/Icon.js
   faWindowMaximize,
   faBars,
   faTag,
-} from '@fortawesome/free-solid-svg-icons';
-
-library.add(faClock, faCircleNotch, faTimes, faHome, faTh, faCircle, faWindowMaximize, faBars, faTag);
-=======
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faClock, faCircleNotch, faTimes, faHome, faTh, faCircle, faPlus);
->>>>>>> master:client/src/components/ui/Icon.js
+library.add(
+  faClock,
+  faCircleNotch,
+  faTimes,
+  faHome,
+  faTh,
+  faCircle,
+  faWindowMaximize,
+  faBars,
+  faTag,
+  faPlus,
+);
 
 const Icon = (props) => {
   const { icon, variant = 'fas', ...rest } = props;
