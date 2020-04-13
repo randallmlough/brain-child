@@ -1,18 +1,29 @@
 import React from 'react';
 import { useState } from 'react';
+import EditCardModal from '../ui/cardmodal/EditCardModal';
 
 const Card = (props) => {
   const { card, isDragging } = props;
+
+  const [showModal, setShowModal] = useState(false);
   return (
-    <div
-      className={
-        isDragging
-          ? 'px-2 py-1 bg-yellow-300 rounded shadow-lg my-2 text-sm'
-          : 'px-2 py-1 bg-white rounded shadow-sm my-2 text-sm'
-      }
-    >
-      {card.title}
-    </div>
+    <>
+      {showModal ? (
+        <div className="fixed inset-0 justify-center less-transparent-black z-50 h-screen">
+          <EditCardModal setShowModal={setShowModal} card={card} />
+        </div>
+      ) : null}
+      <div
+        className={
+          isDragging
+            ? 'px-2 py-1 bg-yellow-300 rounded shadow-lg my-2 text-sm'
+            : 'px-2 py-1 bg-white rounded shadow-sm my-2 text-sm'
+        }
+        onClick={() => setShowModal(true)}
+      >
+        {card.title}
+      </div>
+    </>
   );
 };
 
