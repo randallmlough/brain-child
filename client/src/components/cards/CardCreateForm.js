@@ -13,31 +13,6 @@ const CardCreateForm = ({ listId, setCreateMode }) => {
       title,
       list: listId,
     },
-<<<<<<< HEAD
-=======
-    // update(cache, { data: { createCard } }) {
-    //   if (createCard.success) {
-    //     const data = cache.readQuery({
-    //       query: GET_LIST,
-    //       variables: {
-    //         listId,
-    //       },
-    //     });
-    //     const list = Object.assign({}, data.list);
-    //     list.cards = list.cards.concat(createCard.card);
-    //     cache.writeQuery({
-    //       query: GET_LIST,
-    //       variables: {
-    //         listId,
-    //       },
-    //       data: {
-    //         list,
-    //       },
-    //     });
-    //   }
-    //   if (!createCard.card) setErrorMessage('Card was not created');
-    // },
->>>>>>> master
     onError() {
       setErrorMessage('Something went wrong');
     },

@@ -67,7 +67,6 @@ const List = (props) => {
           }
           key={listId}
         >
-<<<<<<< HEAD
           <div className="flex justify-between">
             <h3>{list.name}</h3>
             <Icon
@@ -76,9 +75,6 @@ const List = (props) => {
               onClick={() => deleteList()}
             />
           </div>
-=======
-          <h3>{list.name}</h3>
->>>>>>> master
           <ul
             {...provided.droppableProps}
             ref={provided.innerRef}
@@ -111,7 +107,6 @@ const List = (props) => {
               <CardCreateForm listId={listId} setCreateMode={setCreateMode} />
             </div>
           ) : (
-<<<<<<< HEAD
             <button
               className="focus:outline-none"
               onClick={(e) => handleClick(e)}
@@ -119,9 +114,6 @@ const List = (props) => {
               <Icon icon="plus" className="text-sm text-gray-600 mx-1"></Icon>
               <span className="text-gray-600 text-sm">Add a Card</span>
             </button>
-=======
-            <button onClick={(e) => handleClick(e)}>Add a Card</button>
->>>>>>> master
           )}
         </div>
       )}
