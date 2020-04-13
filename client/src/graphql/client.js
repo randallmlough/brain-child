@@ -63,7 +63,7 @@ const createClient = async () => {
       }),
       requestLink,
       new HttpLink({
-        uri: 'http://localhost:5000/graphql',
+        uri: '/graphql',
       }),
     ]),
     cache,
