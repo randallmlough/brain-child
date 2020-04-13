@@ -160,7 +160,18 @@ const Board = (props) => {
               </button>
             )}
           </div>
+<<<<<<< HEAD
         </div>
+=======
+        ) : (
+          <button
+            className="transparent-black py-5 px-20 rounded hover add-list-button mx-5 mt-10"
+            onClick={(e) => handleClick(e)}
+          >
+            Add a List
+          </button>
+        )}
+>>>>>>> master
       </div>
     </DragDropContext>
   );
