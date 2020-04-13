@@ -9,9 +9,10 @@ import {
   faHome,
   faTh,
   faCircle,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faClock, faCircleNotch, faTimes, faHome, faTh, faCircle);
+library.add(faClock, faCircleNotch, faTimes, faHome, faTh, faCircle, faPlus);
 
 const Icon = (props) => {
   const { icon, variant = 'fas', ...rest } = props;
