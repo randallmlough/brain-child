@@ -39,14 +39,6 @@ const ListCreateForm = ({ boardId, setCreateMode }) => {
     onError() {
       setErrorMessage('Something went wrong');
     },
-    // refetchQueries: [
-    //   {
-    //     query: GET_BOARD,
-    //     variables: {
-    //       boardId,
-    //     },
-    //   },
-    // ],
   });
 
   return (

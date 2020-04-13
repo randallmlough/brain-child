@@ -8,6 +8,7 @@ const graphqlHTTP = require('express-graphql');
 const expressPlayground = require('graphql-playground-middleware-express')
   .default;
 const { schema, resolvers } = require('./schema');
+const path = require('path');
 if (env !== 'production') {
   const cors = require('cors');
   app.use(cors({ origin: 'http://localhost:3000' }));
@@ -43,5 +44,15 @@ app.use(
 );
 
 app.get('/playground', expressPlayground({ endpoint: '/graphql' }));
+
+if (process.env.NODE_ENV === 'production') {
+  const CLIENT_BUILD_PATH = path.join(__dirname, '../public');
+
+  app.use(express.static(CLIENT_BUILD_PATH));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(CLIENT_BUILD_PATH, 'index.html'));
+  });
+}
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));

@@ -1,0 +1,26 @@
+{
+    "name": "brain-child",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server/index.js",
+    "engines": {
+      "node": "13.6.0",
+      "npm": "6.x"
+    },
+    "scripts": {
+      "start": "npm --prefix server start",
+      "start_local": "npm --prefix server run start:dev",
+      "build": "npm --prefix client install && npm --prefix client run build",
+      "deploy": "cp -a client/build/. public/",
+      "heroku-postbuild": "npm run build && npm run deploy"
+    },
+    "author": "",
+    "license": "ISC",
+    "prettier": {
+      "trailingComma": "es5",
+      "tabWidth": 2,
+      "semi": true,
+      "singleQuote": true
+    }
+  }
+  

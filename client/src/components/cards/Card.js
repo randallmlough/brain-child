@@ -3,9 +3,7 @@ import { useState } from 'react';
 import EditCardModal from '../ui/cardmodal/EditCardModal';
 
 const Card = (props) => {
-  const [showModal, setShowModal] = useState(false);
-
-  const { card } = props;
+  const { card, isDragging } = props;
   return (
     <>
     {showModal ? (
@@ -19,15 +17,17 @@ const Card = (props) => {
       </div>
     ) : null
     }
-      <li>
-        <div 
-          className="px-2 py-1 bg-white rounded shadow-sm my-2 text-sm"
-          onClick={() => setShowModal(true)}
-        >
-          {card.title}
-        </div>
-      </li>
+      <div
+      className={
+        isDragging
+          ? 'px-2 py-1 bg-yellow-300 rounded shadow-lg my-2 text-sm'
+          : 'px-2 py-1 bg-white rounded shadow-sm my-2 text-sm'
+      }
+    >
+      {card.title}
+    </div>
     </>
+    
   );
 };
 
