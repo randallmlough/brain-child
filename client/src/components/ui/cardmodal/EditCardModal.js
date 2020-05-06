@@ -41,7 +41,7 @@ const EditCardModal = ({ setShowModal, card }) => {
 
   const content = (
     <div className="flex justify-center mt-24">
-      <div className="flex flex-col p-4 w-6/12 bg-gray-100 rounded-sm">
+      <div className="flex flex-col p-4 bg-gray-100 rounded-sm">
         {/* header container */}
         <div className="flex justify-between">
           <div className="flex w-11/12">
