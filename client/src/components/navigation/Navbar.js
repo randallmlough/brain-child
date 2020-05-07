@@ -32,7 +32,7 @@ const Navbar = () => {
   return (
     <div className="flex justify-between items-center w-full">
       <div className="flex">
-        <div className="rounded transparent-white px-2 py-1">
+        <div className="rounded transparent-white hover:opacity-75 px-2 py-1">
           <Link to="/">
             <Icon className="text-white text-md" icon="home" />
           </Link>
@@ -42,7 +42,7 @@ const Navbar = () => {
         </div> */}
       </div>
       <div className="relative" onClick={(e) => handleClick(e)} ref={ref}>
-        <Icon className="text-white text-3xl" icon="circle" />
+        <Icon className="text-white text-3xl hover:opacity-75" icon="circle" />
         <NavDropdown
           className={showDropdown ? 'nav-dd shadow rounded show' : 'nav-dd'}
         />
