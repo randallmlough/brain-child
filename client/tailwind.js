@@ -2,6 +2,9 @@ const { colors } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   theme: {
+    rotate: {
+      '10': '10deg',
+    },
     extend: {
       colors: {
         primary: {
@@ -54,5 +57,7 @@ module.exports = {
     backgroundColor: ['responsive', 'hover', 'focus', 'focus-within'],
     boxShadow: ['responsive', 'hover', 'focus', 'focus-within'],
     borderColor: ['responsive', 'hover', 'focus', 'focus-within'],
+    borderStyle: ['responsive', 'hover', 'focus', 'focus-within'],
+    rotate: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
   },
 };
