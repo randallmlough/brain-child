@@ -9,7 +9,7 @@ const Card = (props) => {
   return (
     <>
       {showModal ? (
-        <div className="fixed inset-0 justify-center less-transparent-black z-50 h-screen">
+        <div className="fixed inset-0 justify-center less-transparent-black z-20 h-screen">
           <EditCardModal setShowModal={setShowModal} card={card} />
         </div>
       ) : null}

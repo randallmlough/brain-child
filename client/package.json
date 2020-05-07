@@ -33,7 +33,7 @@
     "tailwindcss": "^1.2.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "postcss src/styles/main.css -o src/index.css && react-scripts start",
     "build": "npm run build:css && react-scripts build",
     "build:css": "postcss src/styles/main.css -o src/index.css --env production",
     "watch:css": "postcss src/styles/main.css -o src/index.css -w",

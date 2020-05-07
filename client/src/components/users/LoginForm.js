@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { LOGIN_USER } from '../../graphql/mutations/user';
@@ -13,6 +14,23 @@ export default () => {
     variables: {
       email,
       password,
+    },
+    update(cache, { data: { login } }) {
+      if (!login) setErrorMessage('Invalid Credentials');
+      else {
+        localStorage.setItem('token', login.token);
+      }
+    },
+    onError() {
+      setErrorMessage('Something went wrong');
+    },
+    refetchQueries: [{ query: CURRENT_USER }, { query: IS_LOGGED_IN }],
+  });
+
+  const [loginDemoUser, { loadingDemo, errorDemo }] = useMutation(LOGIN_USER, {
+    variables: {
+      email: 'demo@example.com',
+      password: 'password',
     },
     update(cache, { data: { login } }) {
       if (!login) setErrorMessage('Invalid Credentials');
@@ -67,7 +85,18 @@ export default () => {
         >
           Login
         </button>
+
       </form>
+        <button
+          className="bg-success-600 duration-150 hover:bg-success-400 py-2 rounded mt-2 transition-all text-white w-full"
+          onClick={() => loginDemoUser()}
+          disabled={loading}
+        >
+          Demo Login
+        </button>
+        <div className="text-center text-gray-600 my-3">
+          <Link to="/signup">Did you mean to signup?</Link>
+        </div>
     </>
   );
 };
