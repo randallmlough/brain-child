@@ -630,7 +630,8 @@ video {
 }
 
 .min-list-height {
-  min-height: 20px;
+  min-height: 30px;
+  margin-bottom: 10px;
 }
 
 .show {
@@ -668,6 +669,14 @@ video {
 
 .word-wrap {
   word-wrap: break-word;
+}
+
+.grab-pointer {
+  cursor: grabbing;
+}
+
+.board-modal-box{
+  width: 300px;
 }
 
 .sr-only {
