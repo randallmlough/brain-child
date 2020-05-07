@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ProtectedRoute, AuthRoute } from './util/Route_util';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Splash from './pages/Splash';
+import Splash from './pages/Splash/';
 import Dashboard from './pages/Dashboard';
 import BoardDisplay from './pages/BoardDisplay';
 // import Loading from './components/ui/Loading';
@@ -18,8 +18,7 @@ function App() {
         <AuthRoute path="/signup" component={Signup} />
         <ProtectedRoute path="/dashboard" component={Dashboard} />
         <ProtectedRoute path="/boards/:boardId" component={BoardDisplay} />
-        {/* <Route path="/loading" component={Loading} /> */}
-        {/* <Route path="/test" component={Test} /> */}
+
         <AuthRoute exact path="/" component={Splash} />
         <Route path="/" component={Error} />
       </Switch>
