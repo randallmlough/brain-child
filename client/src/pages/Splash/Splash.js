@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from './logo.svg';
+import { ReactComponent as Organize } from './organizing.svg';
 import cards from './cards.jpg';
 import crud from './crud.jpg';
 import iphone from './iphone.png';
@@ -53,7 +54,9 @@ const Splash = () => {
                 Sign Up - It's Free!
               </Link>
             </div>
-            <div className="md:w-1/2"></div>
+            <div className="md:w-1/2">
+              <Organize className="fill-current ml-3 hidden md:block" />
+            </div>
           </div>
         </div>
       </section>
