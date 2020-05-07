@@ -34,7 +34,7 @@ const DueDate = ({ card, setShowDatePicker}) => {
 
   return(
     <div className="flex justify-center mt-32">
-      <div className="w-3/12 bg-white rounded" ref={ref}>
+      <div className="w-4/12 bg-white rounded" ref={ref}>
         <div className="flex justify-between mx-4 border-b">
           <div></div>
           <h3 className="p-3">Change Due Date</h3>
