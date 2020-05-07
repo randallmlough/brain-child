@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { useMutation } from '@apollo/react-hooks';
@@ -7,6 +7,7 @@ import Icon from '../Icon';
 
 const DueDate = ({ card, setShowDatePicker}) => {
   const [dueDate, setDueDate] = useState(new Date);
+  const ref = useRef(null);
 
   const [updateCardDueDate, { loading, error }] = useMutation(UPDATE_CARD_DUEDATE,
     {
@@ -17,12 +18,23 @@ const DueDate = ({ card, setShowDatePicker}) => {
     })
 
   useEffect(() => {
+    if(ref && ref.current){
+      const docClick = function (e) {
+        if(!ref.current.contains(e.target)) {
+          setShowDatePicker(false);
+        }
+      };
+      document.addEventListener('click', docClick);
+      return () => {
+        document.removeEventListener('click', docClick);
+      };
+    }
     updateCardDueDate();
   }, [dueDate])
 
   return(
     <div className="flex justify-center mt-32">
-      <div className="w-3/12 bg-white rounded">
+      <div className="w-4/12 bg-white rounded" ref={ref}>
         <div className="flex justify-between mx-4 border-b">
           <div></div>
           <h3 className="p-3">Change Due Date</h3>
