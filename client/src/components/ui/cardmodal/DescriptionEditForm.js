@@ -52,7 +52,7 @@ const DescriptionEditForm = ({ card, closeEdit }) => {
           value={description}
           onChange={(e) => setDescription(e.currentTarget.value)}
           className="w-full resize-none h-32 rounded border-primary-400
-              border-2 border-solid"
+              border-2 border-solid p-3"
         />
         <input
           type="submit"

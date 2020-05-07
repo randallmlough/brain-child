@@ -41,7 +41,7 @@ const EditCardModal = ({ setShowModal, card }) => {
 
   const content = (
     <div className="flex justify-center mt-24">
-      <div className="flex flex-col p-4 w-6/12 bg-gray-100 rounded-sm">
+      <div className="flex flex-col p-4 bg-gray-100 rounded-sm w-8/12">
         {/* header container */}
         <div className="flex justify-between">
           <div className="flex w-11/12">
@@ -61,10 +61,10 @@ const EditCardModal = ({ setShowModal, card }) => {
         {/* main content container */}
         <div className="flex justify-between">
           {/* main column container */}
-          <div className="w-9/12">
-            <div className="flex w-full ml-8">
+          <div className="w-9/12 px-2">
+            <div className="flex ml-8">
               {card.label ? (
-                <div className="mr-1">
+                <div className="mr-1 pr-2">
                   <h3 className="uppercase">Labels</h3>
                   <div
                     onClick={() => setShowLabelsModal(true)}
@@ -107,7 +107,7 @@ const EditCardModal = ({ setShowModal, card }) => {
             </div>
           </div>
           {/* sidebar column container */}
-          <div className="flex flex-col w-3/12">
+          <div className="flex flex-col w-3/12 px-2">
             {showLabelsModal ? (
               <div className="fixed inset-0 justify-center z-50 h-screen shadow-lg p-2">
                 <Labels card={card} setShowLabelsModal={setShowLabelsModal} />

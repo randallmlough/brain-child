@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation } from '@apollo/react-hooks';
-import { SIGNUP_USER } from '../../graphql/mutations/user';
+import { SIGNUP_USER, LOGIN_USER } from '../../graphql/mutations/user';
 import { IS_LOGGED_IN, CURRENT_USER } from '../../graphql/queries/user';
 
 export default () => {
@@ -18,6 +19,23 @@ export default () => {
       if (!signUp) setErrorMessage('Invalid Credentials');
       else {
         localStorage.setItem('token', signUp.token);
+      }
+    },
+    onError() {
+      setErrorMessage('Something went wrong');
+    },
+    refetchQueries: [{ query: CURRENT_USER }, { query: IS_LOGGED_IN }],
+  });
+
+  const [demoLogin] = useMutation(LOGIN_USER, {
+    variables: {
+      email: 'demo@example.com',
+      password: 'password',
+    },
+    update(cache, { data: { login } }) {
+      if (!login) setErrorMessage('Invalid Credentials');
+      else {
+        localStorage.setItem('token', login.token);
       }
     },
     onError() {
@@ -69,6 +87,16 @@ export default () => {
           Sign up
         </button>
       </form>
+        <button
+          className="bg-success-600 duration-150 hover:bg-success-400 py-2 mt-2 rounded text-white transition-all w-full"
+          onClick={() => demoLogin()}
+          disabled={loading}
+        >
+          Demo Login
+        </button>
+        <div className="text-center text-gray-600 my-3">
+          <Link to="/login">Did you mean to login?</Link>
+        </div>
     </>
   );
 };
