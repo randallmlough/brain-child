@@ -4,11 +4,13 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { CREATE_BOARD } from '../../graphql/mutations/board';
 import { CURRENT_USER } from '../../graphql/queries/user';
 import Icon from '../ui/Icon';
+import { withRouter } from 'react-router-dom';
 
 const BoardCreateFormModal = (props) => {
   const { setShowModal, userId } = props;
   const [errorMessage, setErrorMessage] = useState('');
   const [name, setName] = useState('');
+  console.log(props);
 
   const [createBoard, { loading, error }] = useMutation(CREATE_BOARD, {
     variables: {
@@ -16,7 +18,11 @@ const BoardCreateFormModal = (props) => {
       user: userId,
     },
     update(cache, { data: { createBoard } }) {
+      console.log(createBoard);
       if (!createBoard.success) setErrorMessage('Board was not created');
+      if (createBoard.success) {
+        props.history.push(`boards/${createBoard.board._id}`);
+      }
     },
     onError() {
       setErrorMessage('Something went wrong');
@@ -25,16 +31,8 @@ const BoardCreateFormModal = (props) => {
   });
 
   return (
-    <div className="mt-24">
+    <div className="mt-24 board-modal-box">
       <div className="">
-        <div className="flex justify-end mb-2">
-          <button
-            className="focus:outline-none"
-            onClick={() => setShowModal(false)}
-          >
-            <Icon icon="times" className="text-white text-xl" />
-          </button>
-        </div>
         {errorMessage}
         <form
           onSubmit={(e) => {
@@ -43,18 +41,26 @@ const BoardCreateFormModal = (props) => {
             setShowModal(false);
           }}
         >
-          <div className="mb-3">
+          <div className="mb-3 bg-success-400 rounded pt-2 pl-2 pb-8 pr-4 flex justify-between shadow-lg">
             <label className="sr-only" htmlFor="inputName">
               Name
             </label>
             <input
               id="inputName"
-              className="rounded p-5"
+              className="rounded p-1 w-3/4 bg-success-300"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter board title..."
             />
+            <div className="">
+              <button
+                className="focus:outline-none"
+                onClick={() => setShowModal(false)}
+              >
+                <Icon icon="times" className="text-white text-lg" />
+              </button>
+            </div>
           </div>
           <div>
             <button
@@ -72,4 +78,4 @@ const BoardCreateFormModal = (props) => {
   );
 };
 
-export default BoardCreateFormModal;
+export default withRouter(BoardCreateFormModal);
