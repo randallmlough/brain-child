@@ -62,8 +62,8 @@ const List = (props) => {
         <div
           className={
             snapshot.isDraggingOver
-              ? 'transparent-black text-black shadow-md p-2 mx-5 rounded list-min-width self-start'
-              : 'bg-gray-300 shadow-md p-2 mx-5 rounded list-min-width self-start'
+              ? 'bg-success-800 transition duration-500 text-black shadow-md p-2 mx-2 rounded list-min-width self-start'
+              : 'bg-gray-300 shadow-lg p-2 mx-2 rounded list-min-width self-start'
           }
           key={listId}
         >
