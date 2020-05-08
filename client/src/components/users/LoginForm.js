@@ -16,7 +16,7 @@ export default () => {
       password,
     },
     update(cache, { data: { login } }) {
-      if (!login) setErrorMessage('Invalid Credentials');
+      if (!login) setErrorMessage('Invalid credentials');
       else {
         localStorage.setItem('token', login.token);
       }
@@ -33,7 +33,7 @@ export default () => {
       password: 'password',
     },
     update(cache, { data: { login } }) {
-      if (!login) setErrorMessage('Invalid Credentials');
+      if (!login) setErrorMessage('Invalid credentials');
       else {
         localStorage.setItem('token', login.token);
       }
@@ -46,6 +46,9 @@ export default () => {
 
   return (
     <>
+      <div className="w-full text-center mb-1">
+        <h1 className="text-danger-600 text-sm">{errorMessage}</h1>
+      </div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -85,18 +88,17 @@ export default () => {
         >
           Login
         </button>
-
       </form>
-        <button
-          className="bg-success-600 duration-150 hover:bg-success-400 py-2 rounded mt-2 transition-all text-white w-full"
-          onClick={() => loginDemoUser()}
-          disabled={loading}
-        >
-          Demo Login
-        </button>
-        <div className="text-center text-gray-600 my-3">
-          <Link to="/signup">Did you mean to signup?</Link>
-        </div>
+      <button
+        className="bg-success-600 duration-150 hover:bg-success-400 py-2 rounded mt-2 transition-all text-white w-full"
+        onClick={() => loginDemoUser()}
+        disabled={loading}
+      >
+        Demo Login
+      </button>
+      <div className="text-center text-gray-600 my-3">
+        <Link to="/signup">Did you mean to sign up?</Link>
+      </div>
     </>
   );
 };

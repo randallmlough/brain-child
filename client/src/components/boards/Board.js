@@ -145,7 +145,7 @@ const Board = (props) => {
           </ul>
           <div className="mr-5 mt-8">
             {createMode ? (
-              <div className="mx-5" ref={ref}>
+              <div className="mx-2" ref={ref}>
                 <ListCreateForm
                   boardId={data.board._id}
                   setCreateMode={setCreateMode}
@@ -153,7 +153,7 @@ const Board = (props) => {
               </div>
             ) : (
               <button
-                className="transparent-black py-5 px-10 rounded hover list-min-width add-list-button mx-5 focus:outline-none"
+                className="transparent-black py-5 px-10 rounded hover list-min-width add-list-button mx-2 focus:outline-none"
                 onClick={(e) => handleClick(e)}
               >
                 Add a List

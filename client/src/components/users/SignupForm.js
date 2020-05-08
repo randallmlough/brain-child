@@ -46,7 +46,9 @@ export default () => {
 
   return (
     <>
-      <h1> {errorMessage} </h1>
+      <div className="w-full text-center mb-1">
+        <h1 className="text-danger-600 text-sm">{errorMessage}</h1>
+      </div>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -87,16 +89,16 @@ export default () => {
           Sign up
         </button>
       </form>
-        <button
-          className="bg-success-600 duration-150 hover:bg-success-400 py-2 mt-2 rounded text-white transition-all w-full"
-          onClick={() => demoLogin()}
-          disabled={loading}
-        >
-          Demo Login
-        </button>
-        <div className="text-center text-gray-600 my-3">
-          <Link to="/login">Did you mean to login?</Link>
-        </div>
+      <button
+        className="bg-success-600 duration-150 hover:bg-success-400 py-2 mt-2 rounded text-white transition-all w-full"
+        onClick={() => demoLogin()}
+        disabled={loading}
+      >
+        Demo Login
+      </button>
+      <div className="text-center text-gray-600 my-3">
+        <Link to="/login">Did you mean to login?</Link>
+      </div>
     </>
   );
 };

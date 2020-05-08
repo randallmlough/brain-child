@@ -9,7 +9,9 @@ import BoardCreateFormModal from './BoardCreateFormModal';
 const BoardIndex = () => {
   const [showModal, setShowModal] = useState(false);
 
-  const { data, loading, error } = useQuery(CURRENT_USER);
+  const { data, loading, error } = useQuery(CURRENT_USER, {
+    fetchPolicy: 'network-only',
+  });
   if (loading) return <Loading />;
   if (!data.me.boards || error) return <h1>Boards not found</h1>;
 
