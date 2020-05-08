@@ -16,7 +16,8 @@ const Card = (props) => {
       <div
         className={
           isDragging
-            ? 'px-2 py-1 bg-yellow-300 rounded shadow-lg my-2 text-sm grab-pointer transform active:rotate-10'
+
+            ? 'px-2 py-1 bg-yellow-300 rounded shadow-lg my-2 text-sm grab-pointer transform rotate-10'
             : 'px-2 py-1 bg-white rounded shadow my-2 text-sm'
         }
         onClick={() => setShowModal(true)}
